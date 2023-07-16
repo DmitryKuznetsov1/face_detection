@@ -1,0 +1,5 @@
+build:
+  python_version: "3.11"
+  python_packages:
+    - "torch==2.0.1"
+    - "opencv-python==4.8.0.74"
