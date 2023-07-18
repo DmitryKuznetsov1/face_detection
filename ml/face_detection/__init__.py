@@ -1,0 +1,1 @@
+from .opencv_cascade_classifier import CascadeClassifier
