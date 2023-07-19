@@ -9,6 +9,7 @@ model = None
 app = FastAPI()
 
 
+# Data model for the face prediction response
 class FacePredictionResponse(BaseModel):
     x1: int
     y1: int
@@ -17,21 +18,34 @@ class FacePredictionResponse(BaseModel):
     age: int
 
 
-# create a route
 @app.get("/")
 def index():
+    """
+    Root route that returns a welcome message.
+    """
     return {"text": "Face Detection and Age Estimation"}
 
 
-# Register the function to run during startup
 @app.on_event("startup")
 def startup_event():
+    """
+    Function to run during server startup, loads the model for face detection age estimation.
+    """
     global model
     model = load_model()
 
 
 @app.post("/predict")
 async def predict_faces(image: UploadFile = File(...)):
+    """
+    Route for detecting faces and estimating their ages from an image.
+
+    Parameters:
+    image: UploadFile - The image uploaded in the request body.
+
+    Returns:
+    List of predicted face parameters: (x1, y1) coordinates, width, height, and estimated age.
+    """
     contents = await image.read()
     npimg = np.frombuffer(contents, np.uint8)
     image_decoded = imdecode(npimg, IMREAD_COLOR)

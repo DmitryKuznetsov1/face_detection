@@ -58,7 +58,8 @@ class Predictor:
         for face_coordinates in faces:
             x1, y1, width, height = face_coordinates
             face = image[y1:y1 + height, x1:x1 + width, :]
-            age_prediction = self.age_estimator(face)
+            face_preprocessed = self.age_estimator.transform(face)
+            age_prediction = self.age_estimator(face_preprocessed)
             output.append(
                 FacePrediction(
                     x1=x1,
