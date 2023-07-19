@@ -36,10 +36,14 @@ class Predictor:
         self.detector = CascadeClassifier()
 
         self.age_estimator = EfficientNetRegressor()
-        age_estimation_weights_folder = self.current_module_dir / "age_estimation/weights"
-        age_estimation_weights_file = config.get("AGE ESTIMATION", 'weights')
+        age_estimation_weights_folder = (
+            self.current_module_dir / "age_estimation/weights"
+        )
+        age_estimation_weights_file = config.get("AGE ESTIMATION", "weights")
         weights_path = age_estimation_weights_folder / age_estimation_weights_file
-        self.age_estimator.load_state_dict(torch.load(weights_path, map_location=torch.device('cpu')))
+        self.age_estimator.load_state_dict(
+            torch.load(weights_path, map_location=torch.device("cpu"))
+        )
         self.age_estimator.eval()
 
     def predict(self, image: np.ndarray) -> list[FacePrediction]:
@@ -57,7 +61,7 @@ class Predictor:
 
         for face_coordinates in faces:
             x1, y1, width, height = face_coordinates
-            face = image[y1:y1 + height, x1:x1 + width, :]
+            face = image[y1 : y1 + height, x1 : x1 + width, :]
             face_preprocessed = self.age_estimator.transform(face)
             age_prediction = self.age_estimator(face_preprocessed)
             output.append(
@@ -66,7 +70,7 @@ class Predictor:
                     y1=y1,
                     width=width,
                     height=height,
-                    age_prediction=age_prediction
+                    age_prediction=age_prediction,
                 )
             )
 

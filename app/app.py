@@ -54,9 +54,12 @@ async def predict_faces(image: UploadFile = File(...)):
     response = []
     for face_prediction in face_predictions:
         response.append(
-            FacePredictionResponse(x1=face_prediction.x1,
-                                   y1=face_prediction.y1,
-                                   width=face_prediction.width,
-                                   height=face_prediction.height,
-                                   age=face_prediction.age_prediction))
+            FacePredictionResponse(
+                x1=face_prediction.x1,
+                y1=face_prediction.y1,
+                width=face_prediction.width,
+                height=face_prediction.height,
+                age=face_prediction.age_prediction,
+            )
+        )
     return response

@@ -15,7 +15,7 @@ class EfficientNetRegressor(nn.Module):
         The EfficientNet backbone is pretrained on ImageNet.
         """
         super(EfficientNetRegressor, self).__init__()
-        self.model = EfficientNet.from_pretrained('efficientnet-b5')
+        self.model = EfficientNet.from_pretrained("efficientnet-b5")
         num_features = self.model._fc.in_features
         self.model._fc = nn.Linear(num_features, 1)
 
@@ -47,7 +47,12 @@ class EfficientNetRegressor(nn.Module):
         Returns:
             torch.Tensor: Transformed and preprocessed image tensor.
         """
-        tfms = transforms.Compose([transforms.ToTensor(), transforms.Resize(224),
-                                   transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]), ])
+        tfms = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Resize(224),
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+            ]
+        )
         img = tfms(face).unsqueeze(0)
         return img

@@ -8,10 +8,18 @@ class CascadeClassifier:
         Initializes the FaceDetector.
 
         """
-        self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+        self.face_cascade = cv2.CascadeClassifier(
+            cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+        )
 
-    def detect_faces(self, image: np.ndarray, scale_factor: float = 1.1, min_neighbors: int = 5,
-                     min_size: tuple[int, int] = (30, 30), visualize: bool = False) -> np.ndarray:
+    def detect_faces(
+        self,
+        image: np.ndarray,
+        scale_factor: float = 1.1,
+        min_neighbors: int = 5,
+        min_size: tuple[int, int] = (30, 30),
+        visualize: bool = False,
+    ) -> np.ndarray:
         """
         Detects faces in the given image.
 
@@ -28,10 +36,11 @@ class CascadeClassifier:
                                 in the format (x, y, width, height).
         """
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        faces = self.face_cascade.detectMultiScale(gray, scaleFactor=scale_factor,
-                                                   minNeighbors=min_neighbors, minSize=min_size)
+        faces = self.face_cascade.detectMultiScale(
+            gray, scaleFactor=scale_factor, minNeighbors=min_neighbors, minSize=min_size
+        )
         if visualize:
-            for (x, y, w, h) in faces:
+            for x, y, w, h in faces:
                 cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 3)
 
         return faces
