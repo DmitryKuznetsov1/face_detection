@@ -1,3 +1,4 @@
+import configparser
 from pathlib import Path
 
 import torch
@@ -23,18 +24,21 @@ class Predictor:
     def __init__(self):
         self.detector = None
         self.age_estimator = None
+        self.current_module_dir = Path(__file__).resolve().parent
 
     def setup(self) -> None:
         """
         Set up the predictor by initializing the face detector and age estimator.
         """
+        config = configparser.ConfigParser()
+        config.read(self.current_module_dir / "model_config.ini")
+
         self.detector = CascadeClassifier()
 
         self.age_estimator = AgeRegressor()
-        current_module_path = Path(__file__).resolve()
-        weights_folder = current_module_path.parent / "age_estimation/weights"
-        weights_file = "2.EfficientNetB5-60.5.pth"
-        weights_path = weights_folder / weights_file
+        age_estimation_weights_folder = self.current_module_dir / "age_estimation/weights"
+        age_estimation_weights_file = config.get("AGE ESTIMATION", 'weights')
+        weights_path = age_estimation_weights_folder / age_estimation_weights_file
         self.age_estimator.load_state_dict(torch.load(weights_path, map_location=torch.device('cpu')))
         self.age_estimator.eval()
 
