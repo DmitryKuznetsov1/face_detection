@@ -4,7 +4,7 @@ from pathlib import Path
 import torch
 
 from ml.face_detection import CascadeClassifier
-from ml.age_estimation import AgeRegressor
+from ml.age_estimation import EfficientNetRegressor
 import numpy as np
 from dataclasses import dataclass
 
@@ -35,7 +35,7 @@ class Predictor:
 
         self.detector = CascadeClassifier()
 
-        self.age_estimator = AgeRegressor()
+        self.age_estimator = EfficientNetRegressor()
         age_estimation_weights_folder = self.current_module_dir / "age_estimation/weights"
         age_estimation_weights_file = config.get("AGE ESTIMATION", 'weights')
         weights_path = age_estimation_weights_folder / age_estimation_weights_file

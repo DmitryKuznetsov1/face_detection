@@ -3,9 +3,9 @@ from torchvision import transforms
 from torch import nn
 
 
-class AgeRegressor(nn.Module):
+class EfficientNetRegressor(nn.Module):
     def __init__(self):
-        super(AgeRegressor, self).__init__()
+        super(EfficientNetRegressor, self).__init__()
         self.model = EfficientNet.from_pretrained('efficientnet-b5')
         num_features = self.model._fc.in_features
         self.model._fc = nn.Linear(num_features, 1)

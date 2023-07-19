@@ -1,1 +1,1 @@
-from .regression_models import AgeRegressor
+from .regression_models import EfficientNetRegressor
