@@ -1,9 +1,11 @@
-opencv-python==4.8.0.74
-Pillow==10.0.0
-
+opencv-python~=4.8.0.74
+Pillow~=10.0.0
 numpy~=1.25.1
 torch~=2.0.1
 torchvision~=0.15.2
 fastapi~=0.98.0
 pydantic~=1.10.11
 requests~=2.31.0
+uvicorn~=0.23.1
+efficientnet_pytorch==0.7.1
+python-multipart~=0.0.6
