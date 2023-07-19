@@ -1,4 +1,9 @@
+from pathlib import Path
+
+import torch
+
 from ml.face_detection import CascadeClassifier
+from ml.age_estimation import AgeRegressor
 import numpy as np
 from dataclasses import dataclass
 
@@ -25,6 +30,14 @@ class Predictor:
         """
         self.detector = CascadeClassifier()
 
+        self.age_estimator = AgeRegressor()
+        current_module_path = Path(__file__).resolve()
+        weights_folder = current_module_path.parent / "age_estimation/weights"
+        weights_file = "2.EfficientNetB5-60.5.pth"
+        weights_path = weights_folder / weights_file
+        self.age_estimator.load_state_dict(torch.load(weights_path, map_location=torch.device('cpu')))
+        self.age_estimator.eval()
+
     def predict(self, image: np.ndarray) -> list[FacePrediction]:
         """
         Perform face detection and age estimation on the given image.
@@ -40,7 +53,8 @@ class Predictor:
 
         for face_coordinates in faces:
             x1, y1, width, height = face_coordinates
-            age_prediction: int = 0
+            face = image[y1:y1 + height, x1:x1 + width, :]
+            age_prediction = self.age_estimator(face)
             output.append(
                 FacePrediction(
                     x1=x1,

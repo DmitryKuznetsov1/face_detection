@@ -164,3 +164,4 @@ data/
 .DS_Store
 configurations.ipynb
 client.py
+/ml/age_estimation/weights/2.EfficientNetB5-60.5.pth
