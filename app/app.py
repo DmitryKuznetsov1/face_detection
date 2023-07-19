@@ -30,7 +30,7 @@ def startup_event():
     model = load_model()
 
 
-@app.get("/predict")
+@app.post("/predict")
 async def predict_faces(image: UploadFile = File(...)):
     contents = await image.read()
     npimg = np.frombuffer(contents, np.uint8)
