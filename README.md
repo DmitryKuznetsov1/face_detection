@@ -25,6 +25,11 @@
 Это означает, что в среднем модель ошибается в среднем на 7-8 лет, что кажется приемлемым
 для начального приближения.
 
+### Инструкции по загрузке весов модели, определяющей возраст
+1. Скачайте [файл](https://drive.google.com/file/d/1x-FHlJgvGXIFQXkYSGaIzWylcNWpAj6a/view?usp=sharing), содержащий
+веса — 2.EfficientNetB5-60.5.pth — c Google Drive
+2. Поместите файл в папку `ml/age_estimation/weights/`
+
 ### Запуск приложения в докер-контейнере
 ```
 docker build -t face_p-app .
